@@ -1,0 +1,20 @@
+# --- COMPILAÇÃO DO JAVA / MAVEN (Pasta target da imagem) ---
+target/
+bin/
+*.class
+
+# --- CONFIGURAÇÕES DO ECLIPSE (Arquivos e pastas da sua imagem) ---
+.settings/
+.classpath
+.project
+*.launch
+.metadata/
+
+# --- ARQUIVOS DO SISTEMA OPERACIONAL ---
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# --- ARQUIVOS PESSOAIS / ANOTAÇÕES ---
+*.txt
+*.log
