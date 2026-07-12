@@ -12,13 +12,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "empresa")
+@Table(name = "empresa", uniqueConstraints = {
+		@UniqueConstraint(name ="unique_pessoa_empresa", columnNames = {"pessoa_id"})
+})
 @SequenceGenerator(name = "seq_empresa", sequenceName = "seq_empresa", allocationSize = 1, initialValue = 1)
 public class Empresa {
 
@@ -51,8 +55,10 @@ public class Empresa {
 	@Column(nullable = true)
 	private LocalDate vigenciaPlano;
 
-	
-	@ManyToOne
+	@NotNull(message = "Pessoa deve ser informada para cadastrar a instituição jurídica (PJ)")
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "pessoa_id", nullable = false, 
+	foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "pessoa_fk"))
 	private Pessoa pessoa;
 
 	public Long getId() {
