@@ -80,4 +80,142 @@ public class Pedido {
 	@JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresa_fk"))
 	private Empresa empresa;
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNumeroPedido() {
+		return numeroPedido;
+	}
+
+	public void setNumeroPedido(String numeroPedido) {
+		this.numeroPedido = numeroPedido;
+	}
+
+	public StatusPedido getStatusPedido() {
+		return statusPedido;
+	}
+
+	public void setStatusPedido(StatusPedido statusPedido) {
+		this.statusPedido = statusPedido;
+	}
+
+	public TipoPedido getTipoPedido() {
+		return tipoPedido;
+	}
+
+	public void setTipoPedido(TipoPedido tipoPedido) {
+		this.tipoPedido = tipoPedido;
+	}
+
+	public FormaPagamento getFormaPagamento() {
+		return formaPagamento;
+	}
+
+	public void setFormaPagamento(FormaPagamento formaPagamento) {
+		this.formaPagamento = formaPagamento;
+	}
+
+	public LocalDateTime getDataPedido() {
+		return dataPedido;
+	}
+
+	public void setDataPedido(LocalDateTime dataPedido) {
+		this.dataPedido = dataPedido;
+	}
+
+	public LocalDateTime getDataPagamento() {
+		return dataPagamento;
+	}
+
+	public void setDataPagamento(LocalDateTime dataPagamento) {
+		this.dataPagamento = dataPagamento;
+	}
+
+	public LocalDateTime getDataCancelamento() {
+		return dataCancelamento;
+	}
+
+	public void setDataCancelamento(LocalDateTime dataCancelamento) {
+		this.dataCancelamento = dataCancelamento;
+	}
+
+	public BigDecimal getSubTotal() {
+		return subTotal;
+	}
+
+	public void setSubTotal(BigDecimal subTotal) {
+		this.subTotal = subTotal;
+	}
+
+	public BigDecimal getDesconto() {
+		return desconto;
+	}
+
+	public void setDesconto(BigDecimal desconto) {
+		this.desconto = desconto;
+	}
+
+	public BigDecimal getFrete() {
+		return frete;
+	}
+
+	public void setFrete(BigDecimal frete) {
+		this.frete = frete;
+	}
+
+	public BigDecimal getTaxas() {
+		return taxas;
+	}
+
+	public void setTaxas(BigDecimal taxas) {
+		this.taxas = taxas;
+	}
+
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void setTotal(BigDecimal total) {
+		this.total = total;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+
+	public Usuario getVendedor() {
+		return vendedor;
+	}
+
+	public void setVendedor(Usuario vendedor) {
+		this.vendedor = vendedor;
+	}
+
+	public Usuario getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Usuario cliente) {
+		this.cliente = cliente;
+	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+	
+	
+
 }

@@ -95,4 +95,82 @@ public class Usuario implements UserDetails {
 		return login;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public boolean isBloqueio() {
+		return bloqueio;
+	}
+
+	public void setBloqueio(boolean bloqueio) {
+		this.bloqueio = bloqueio;
+	}
+
+	public String getTokenSessao() {
+		return tokenSessao;
+	}
+
+	public void setTokenSessao(String tokenSessao) {
+		this.tokenSessao = tokenSessao;
+	}
+
+	public String getRefreshToken() {
+		return refreshToken;
+	}
+
+	public void setRefreshToken(String refreshToken) {
+		this.refreshToken = refreshToken;
+	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
+	public ClienteFuncionario getClienteFuncionario() {
+		return clienteFuncionario;
+	}
+
+	public void setClienteFuncionario(ClienteFuncionario clienteFuncionario) {
+		this.clienteFuncionario = clienteFuncionario;
+	}
+
+	public List<Role> getAcessos() {
+		return acessos;
+	}
+
+	public void setAcessos(List<Role> acessos) {
+		this.acessos = acessos;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	
+
 }

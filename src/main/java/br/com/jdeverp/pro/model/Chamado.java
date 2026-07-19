@@ -83,4 +83,110 @@ public class Chamado {
 	@JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresa_fk"))
 	private Empresa empresa;
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public TipoChamado getTipoChamado() {
+		return tipoChamado;
+	}
+
+	public void setTipoChamado(TipoChamado tipoChamado) {
+		this.tipoChamado = tipoChamado;
+	}
+
+	public PrioridadeChamado getPrioridade() {
+		return prioridade;
+	}
+
+	public void setPrioridade(PrioridadeChamado prioridade) {
+		this.prioridade = prioridade;
+	}
+
+	public StatusChamado getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusChamado status) {
+		this.status = status;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public LocalDateTime getDataAbertura() {
+		return dataAbertura;
+	}
+
+	public void setDataAbertura(LocalDateTime dataAbertura) {
+		this.dataAbertura = dataAbertura;
+	}
+
+	public LocalDateTime getDataFechamento() {
+		return dataFechamento;
+	}
+
+	public void setDataFechamento(LocalDateTime dataFechamento) {
+		this.dataFechamento = dataFechamento;
+	}
+
+	public Usuario getAbertoUser() {
+		return abertoUser;
+	}
+
+	public void setAbertoUser(Usuario abertoUser) {
+		this.abertoUser = abertoUser;
+	}
+
+	public Usuario getFechadoUser() {
+		return fechadoUser;
+	}
+
+	public void setFechadoUser(Usuario fechadoUser) {
+		this.fechadoUser = fechadoUser;
+	}
+
+	public Usuario getAtendente() {
+		return atendente;
+	}
+
+	public void setAtendente(Usuario atendente) {
+		this.atendente = atendente;
+	}
+
+	public Usuario getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Usuario cliente) {
+		this.cliente = cliente;
+	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+	
+	
+
 }

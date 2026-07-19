@@ -62,4 +62,70 @@ public class MovimentacaoProduto {
 	@JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresa_fk"))
 	private Empresa empresa;
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public BigDecimal getValor() {
+		return valor;
+	}
+
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
+	}
+
+	public TipoMovimentacaoProduto getTipoMovimentacaoProduto() {
+		return tipoMovimentacaoProduto;
+	}
+
+	public void setTipoMovimentacaoProduto(TipoMovimentacaoProduto tipoMovimentacaoProduto) {
+		this.tipoMovimentacaoProduto = tipoMovimentacaoProduto;
+	}
+
+	public double getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(double quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public LocalDateTime getDataMovimento() {
+		return dataMovimento;
+	}
+
+	public void setDataMovimento(LocalDateTime dataMovimento) {
+		this.dataMovimento = dataMovimento;
+	}
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
+
+	public Pedido getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+	
+	
+
 }

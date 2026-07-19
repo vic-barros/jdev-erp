@@ -37,4 +37,26 @@ public class Role implements GrantedAuthority {
 		return this.acesso;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getAcesso() {
+		return acesso;
+	}
+
+	public void setAcesso(String acesso) {
+		this.acesso = acesso;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	
+
 }

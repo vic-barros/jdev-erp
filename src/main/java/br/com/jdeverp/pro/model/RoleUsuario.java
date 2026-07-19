@@ -32,4 +32,30 @@ public class RoleUsuario {
 	@JoinColumn(name = "usuario_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "usuario_fk"))
 	private Usuario usuario;
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Role getAcesso() {
+		return acesso;
+	}
+
+	public void setAcesso(Role acesso) {
+		this.acesso = acesso;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
+	
+
 }
