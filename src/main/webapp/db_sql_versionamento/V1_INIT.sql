@@ -75,3 +75,37 @@ select nextval('seq_empresa');
 
 --Habilita restrições, trigger e contrains
 SET session_replication_role = origin;
+
+
+-- Carga de dados para a tabela Categoria (30 registros)
+
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Eletrodomésticos', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Informática', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Smartphones e Telefonia', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'TV e Áudio', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Móveis e Decoração', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Eletroportáteis', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Ferramentas e Jardim', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Automotivo e Acessórios', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Som Automotivo', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Cama, Mesa e Banho', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Esporte e Lazer', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Moda Masculina', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Moda Feminina', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Calçados', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Brinquedos e Jogos', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Bebê e Infantil', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Beleza e Perfumaria', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Cuidados Pessoais', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Alimentos e Bebidas', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Pet Shop', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Papelaria e Escritório', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Livros e Papelaria', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Games e Consoles', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Câmeras e Filmadoras', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Relógios e Joias', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Mala e Mochilas', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Iluminação', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Ar e Ventilação', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Segurança e Alarmes', 1);
+INSERT INTO categoria (id, nome, empresa_id) VALUES (nextval('seq_categoria'), 'Instrumentos Musicais', 1);

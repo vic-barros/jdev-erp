@@ -16,7 +16,7 @@ public interface CategoriaRepository extends JpaJdevRepository<Categoria, Long>{
 	@Query("select c from Categoria c where c.empresa.id = :idEmpresa")
 	List<Categoria> findAll(@Param("idEmpresa") Long idEmpresa);
 	
-	@Query("select c from categoria c where c.empresa.id = :idEmpresa " 
+	@Query("select c from Categoria c where c.empresa.id = :idEmpresa " 
 	+ "and upper(trim(c.nome)) " + "like upper(concat('%', trim(:nome), '%'))")
 	List<Categoria> buscaPorNome(@Param("nome") String nome, @Param("idEmpresa") Long idEmpresa);
 	
@@ -32,4 +32,5 @@ public interface CategoriaRepository extends JpaJdevRepository<Categoria, Long>{
 	@Modifying(flushAutomatically = true, clearAutomatically = true)
 	@Query("delete from Categoria c where c.empresa.id = :idEmpresa and c.id = :id")
 	void deleteById(@Param("id") Long id, @Param("idEmpresa") Long idEmpresa);
+	
 }
