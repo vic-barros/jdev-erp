@@ -16,6 +16,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import br.com.jdeverp.pro.repository.JpaJdevRepositoryImpl;
 import jakarta.annotation.PostConstruct;
 
 @SpringBootApplication
@@ -24,7 +25,8 @@ import jakarta.annotation.PostConstruct;
 @EnableAsync
 @EnableTransactionManagement
 @EntityScan(basePackages="br.com.jdeverp.pro.model")
-@EnableJpaRepositories(basePackages = "br.com.jdeverp.pro.repository")
+@EnableJpaRepositories(basePackages = "br.com.jdeverp.pro.repository", 
+repositoryBaseClass = JpaJdevRepositoryImpl.class)
 @ComponentScan(basePackages = "br.com.jdeverp.pro")
 public class JDevERPPROApplication {
 	public static void main(String[] args) {
