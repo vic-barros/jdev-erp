@@ -92,21 +92,46 @@ public class JpaJdevRepositoryImpl<T, ID extends Serializable> extends SimpleJpa
 	}
 
 	@Override
-	public Optional<T> buscarPorId(ID id, Long empresaId) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
-	}
-
-	@Override
 	public List<T> listar(Long empresaId) {
-		// TODO Auto-generated method stub
-		return null;
+
+		String jpql = "from " + domainClass.getSimpleName();
+
+		if (multiEmpresa) {
+			jpql += " where empresa.id = :empresaId";
+		}
+
+		TypedQuery<T> query = entityManager.createQuery(jpql, domainClass);
+
+		if (multiEmpresa) {
+			query.setParameter("empresaId", empresaId);
+		}
+
+		return query.getResultList();
 	}
 
+	// Select para saber se existem registros
+	// Verifica se vai retornar pelo menos 1 registro com a condição
 	@Override
 	public boolean existsById(ID id, long empresaId) {
-		// TODO Auto-generated method stub
-		return false;
+		String jpql = "select 1 from " + domainClass.getSimpleName() + " e where e.id = :id ";
+
+		if (multiEmpresa) {
+			jpql += " and e.empresa.id = :empresaId";
+		}
+
+		TypedQuery<Integer> query = entityManager.createQuery(jpql, Integer.class);
+
+		if (multiEmpresa) {
+			query.setParameter("id", id);
+		}
+
+		if (multiEmpresa) {
+			query.setParameter("empresaId", empresaId);
+		}
+
+		query.setMaxResults(1);
+
+		return !query.getResultList().isEmpty();
 	}
 
 	// Vamos precisar de uma dependência, para validar se esses Ids não são vazios
@@ -175,6 +200,26 @@ public class JpaJdevRepositoryImpl<T, ID extends Serializable> extends SimpleJpa
 		} catch (NoSuchFieldException e) {
 			return false;
 		}
+
+	}
+
+	@Override
+	public Optional<T> buscarPorId(ID id, Long empresaId) {
+
+		String jpql = "from " + domainClass.getSimpleName() + " where id  :id";
+
+		if (multiEmpresa) {
+			jpql += " and empresa.id = :empresaId";
+		}
+
+		TypedQuery<T> query = entityManager.createQuery(jpql, domainClass);
+		query.setParameter("id", id);
+
+		if (multiEmpresa) {
+			query.setParameter("empresaId", empresaId);
+		}
+
+		return query.getResultStream().findFirst();
 
 	}
 
