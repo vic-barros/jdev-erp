@@ -2,6 +2,7 @@ package br.com.jdeverp.pro.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -141,22 +142,28 @@ public class TesteCategoriaRepository extends TestContextoSpring {
 	@Test
 	public void testeListaPaginada() {
 		Empresa empresa = empresaRepository.findById(1L).get();
-		
+
 		Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.ASC, "nome"));
-		//o objeto pageable é passado pelo frontend através do endpoint
+		// o objeto pageable é passado pelo frontend através do endpoint
 		Page<Categoria> page = categoriaRepository.listarPaginado(empresa.getId(), pageable);
-		
+
 		// --- ASSERÇÕES RECOMENDADAS ---
-	    
-	    // 1. Garante que a página não veio nula nem vazia
-	    assertTrue(page.hasContent());
-	    
-	    // 2. Valida se retornou exatamente 5 itens nesta página
-	    assertEquals(5, page.getContent().size());
-	    
-	    // 3. Valida se o número da página atual é a página 0
-	    assertEquals(0, page.getNumber());
-	    
+
+		// 1. Garante que a página não veio nula nem vazia
+		assertTrue(page.hasContent());
+
+		// 2. Valida se retornou exatamente 5 itens nesta página
+		assertEquals(5, page.getContent().size());
+
+		// 3. Valida se o número da página atual é a página 0
+		assertEquals(0, page.getNumber());
+
+	}
+
+	@Test
+	public void testeFindAll() {
+		categoriaRepository.findAll();
+
 	}
 
 }
