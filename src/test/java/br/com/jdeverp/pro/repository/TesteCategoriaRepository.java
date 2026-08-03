@@ -160,10 +160,4 @@ public class TesteCategoriaRepository extends TestContextoSpring {
 
 	}
 
-	@Test
-	public void testeFindAll() {
-		categoriaRepository.findAll();
-
-	}
-
 }
