@@ -11,10 +11,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.jdeverp.pro.contexto.TestContextoSpring;
 import br.com.jdeverp.pro.model.Categoria;
 import br.com.jdeverp.pro.model.Empresa;
+import jakarta.persistence.EntityManager;
+
 
 public class TesteCategoriaRepository extends TestContextoSpring {
 
@@ -116,29 +119,30 @@ public class TesteCategoriaRepository extends TestContextoSpring {
 	}
 
 	@Test
+	@Transactional
 	public void testdeleteById() {
+	    Empresa empresa = empresaRepository.findById(1L).get();
 
-		Empresa empresa = empresaRepository.findById(1L).get();
+	    // Nome dinâmico garante que não haverá conflito com dados pré-existentes
+	    String nomeUnico = "Som Automotivo " + System.currentTimeMillis();
 
-		Categoria categoria = new Categoria();
-		categoria.setNome("Som Automotivo");
-		categoria.setEmpresa(empresa);
+	    Categoria categoria = new Categoria();
+	    categoria.setNome(nomeUnico);
+	    categoria.setEmpresa(empresa);
 
-		/* Salva no banco e retorno os dados salvos */
-		categoria = categoriaRepository.saveAndFlush(categoria);
+	    categoria = categoriaRepository.saveAndFlush(categoria);
 
-		/* Verifica os dados salvos */
-		assertTrue(categoria.getId() > 0);
-		assertEquals("Som Automotivo", categoria.getNome());
+	    assertTrue(categoria.getId() > 0);
+	    assertEquals(nomeUnico, categoria.getNome());
 
-		/* Busca e esta se o método buscaPorNome está trasendo a categoria */
-		categoriaRepository.deleteById(categoria.getId(), empresa.getId());
+	    // Executa o delete customizado
+	    categoriaRepository.deleteById(categoria.getId(), empresa.getId());
+	    categoriaRepository.flush();
 
-		boolean existe = categoriaRepository.existePorNome("Som Automotivo", empresa.getId());
-		assertFalse(existe);
-
+	    // Valida com o nome dinâmico
+	    boolean existe = categoriaRepository.existePorNome(nomeUnico, empresa.getId());
+	    assertFalse(existe);
 	}
-
 	@Test
 	public void testeListaPaginada() {
 		Empresa empresa = empresaRepository.findById(1L).get();
