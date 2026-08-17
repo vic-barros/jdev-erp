@@ -18,3 +18,6 @@ Desktop.ini
 # --- ARQUIVOS PESSOAIS / ANOTAÇÕES ---
 *.txt
 *.log
+
+# --- CREDENCIAIS / ANOTAÇÕES ---
+src/main/resources/application.properties
