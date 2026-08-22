@@ -6,8 +6,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.jdeverp.pro.dto.LoginDTO;
+import br.com.jdeverp.pro.dto.TokenDTO;
+import br.com.jdeverp.pro.exception.MsgApiException;
 import br.com.jdeverp.pro.model.Usuario;
 import br.com.jdeverp.pro.repository.UsuarioRepository;
 import jakarta.persistence.EntityManager;
@@ -21,6 +27,39 @@ public class UsuarioService {
 
 	@PersistenceContext
 	private EntityManager entityManager;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private AuthenticationManager authenticationManager;
+	
+	@Autowired
+	private JwtService jwtService;
+	
+	
+	//Retorna o token de acesso para o ussuário que fez o login 
+	public TokenDTO login(LoginDTO dto) {
+		Usuario usuario = buscaPorLogin(dto.getLogin());
+		
+		if(usuario == null) {
+			throw new MsgApiException("Usuário não encontrado. ");				
+		}
+		//Explicar porque tem que validar a senha
+		boolean senhaValida = passwordEncoder.matches(dto.getSenha(), usuario.getSenha());
+		
+		if(!senhaValida) {
+			throw new MsgApiException("Senha digitada é inválida. ");
+		}
+		
+		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getLogin(), dto.getSenha()));
+		
+		String token = jwtService.gerarToken(usuario);
+		
+		usuarioRepository.updateTokenSessaoLogin(usuario.getId(), token);
+		
+		return new TokenDTO(token);
+	}
 
 	public List<Usuario> findAll(Long idEmpresa) {
 

@@ -50,5 +50,10 @@ public interface UsuarioRepository extends JpaJdevRepository<Usuario, Long> {
 	@Modifying(flushAutomatically = true, clearAutomatically = true)
 	@Query("delete from Usuario u where u.empresa.id = :idEmpresa and u.id = :id")
 	void deleteById(@Param("id") Long id, @Param("idEmpresa") Long idEmpresa);
+	
+	@Transactional
+	@Modifying(flushAutomatically = true, clearAutomatically = true)
+	@Query("update Usuario set tokenSessao = :token where id = :id")
+	void updateTokenSessaoLogin(@Param("id") Long id, @Param("token") String token);
 
 }
