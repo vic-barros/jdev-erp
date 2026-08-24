@@ -15,6 +15,9 @@ public interface ClienteFuncionarioRepository extends JpaJdevRepository<ClienteF
 
     @Query("select c from ClienteFuncionario c where c.empresa.id = :idEmpresa")
     List<ClienteFuncionario> findAll(@Param("idEmpresa") Long idEmpresa);
+    
+    @Query("select c from ClienteFuncionario c where c.pessoa.id = :idPessoa and c.empresa.id = :idEmpresa")
+    ClienteFuncionario findByPessoa(@Param("idPessoa") Long idPessoa, @Param("idEmpresa") Long idEmpresa);
 
     @Query("select c from ClienteFuncionario c where c.empresa.id = :idEmpresa "
             + "and unaccent(upper(trim(c.pessoa.nome))) "
