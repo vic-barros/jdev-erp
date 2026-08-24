@@ -53,8 +53,10 @@ public class Usuario implements UserDetails {
 
 	private boolean bloqueio = false;
 
+	@Column(columnDefinition = "text") //Precisou fazer isso para não estourar o tamnho do token, estava até 155 caracteres
 	private String tokenSessao;
 
+	@Column(columnDefinition = "text")
 	private String refreshToken;
 
 	// Refere-se ao cadastro da empresa em multitanement

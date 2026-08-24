@@ -125,3 +125,8 @@ INSERT INTO public.role(
 	VALUES (2, 'ROLE_ADMIN');
 
 select nextval('seq_role');
+
+
+ALTER TABLE IF EXISTS usuario
+	ALTER COLUMN refresh_token TYPE TEXT,
+	ALTER COLUMN token_sessao TYPE TEXT;
