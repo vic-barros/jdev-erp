@@ -27,7 +27,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE); // Tem que retornar um JSON porque é arquietetura
-																	// RESP API
+		response.setCharacterEncoding("UTF-8");															// RESP API
 
 		ResponseApi responseApi = new ResponseApi(new Date(), 
 													401, 
