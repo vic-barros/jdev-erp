@@ -1,5 +1,6 @@
 package br.com.jdeverp.pro.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,6 +14,7 @@ public class UsuarioDetailsService implements UserDetailsService {
 	// Carrega o usuário pelo seu Login, pega a Interface do UsuarioRepository e faz
 	// a injeção de dependênci apra usá-la (Autowired)
 
+	@Autowired
 	private UsuarioRepository usuarioRepository;
 
 	@Override
