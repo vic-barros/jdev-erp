@@ -1,5 +1,6 @@
 package br.com.jdeverp.pro.app;
 import java.util.Calendar;
+
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -29,6 +30,8 @@ import jakarta.annotation.PostConstruct;
 repositoryBaseClass = JpaJdevRepositoryImpl.class)
 @ComponentScan(basePackages = "br.com.jdeverp.pro")
 public class JDevERPPROApplication {
+	
+	
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(JDevERPPROApplication.class);
 		app.run(args);
@@ -46,6 +49,7 @@ public class JDevERPPROApplication {
 		TimeZone sp = TimeZone.getTimeZone("America/Sao_Paulo");
 		TimeZone.setDefault(sp);
 		Calendar.getInstance().setTimeZone(sp);
+		
 	}
 
 }
