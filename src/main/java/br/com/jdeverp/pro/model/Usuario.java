@@ -18,6 +18,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
@@ -31,12 +32,9 @@ import jakarta.validation.constraints.NotNull;
 		@UniqueConstraint(name = "unique_cliente_funcionario", columnNames = { "cliente_funcionario_id" }),
 		@UniqueConstraint(name = "unique_login", columnNames = { "login" }),
 		@UniqueConstraint(name = "unique_senha", columnNames = { "senha" }) })
-@SequenceGenerator(name = "seq_usuario", sequenceName = "seq_usuario", allocationSize = 1, initialValue = 1)
+@SequenceGenerator(name = "seq_usuario", sequenceName = "seq_usuario", allocationSize = 1)
 public class Usuario implements UserDetails {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -47,54 +45,60 @@ public class Usuario implements UserDetails {
 	@Column(nullable = false, unique = true)
 	private String login;
 
-	@NotBlank(message = "Senha deve ser informada")
+	@NotBlank(message = "Senha deve ser informado")
 	@Column(nullable = false, unique = true)
 	private String senha;
 
-	private boolean bloqueio = false;
-
-	@Column(columnDefinition = "text") //Precisou fazer isso para não estourar o tamnho do token, estava até 155 caracteres
-	private String tokenSessao;
+	private Boolean bloqueio = false;
 
 	@Column(columnDefinition = "text")
 	private String refreshToken;
 
-	// Refere-se ao cadastro da empresa em multitanement
-	@NotNull(message = "Empresa deve ser informada corretamente")
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresa_fk"))
-	private Empresa empresa;
+	@Column(columnDefinition = "text")
+	private String tokenSessao;
 
-	@NotNull(message = "Cliente/Funcionário deve ser informado para cadastrar o usuário de acesso ao sistema")
+	@NotNull(message = "Cliente ou funcionário deve ser informado para cadastrar o usuário de acesso ao sistema")
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cliente_funcionario_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "cliente_funcionario_fk"))
 	private ClienteFuncionario clienteFuncionario;
 
+	// Alex -> ROLE_ADMIN, ROLE_GERENTE
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "role_usuario", uniqueConstraints = @UniqueConstraint(name = "unique_role_user", columnNames = {
+			"acesso_id", "usuario_id" }), /* Contraint de unicidade entre usuario e acesso */
+
+			joinColumns = @JoinColumn(name = "usuario_id", foreignKey = @ForeignKey(name = "usuario_fk")), /*
+																											 * Representa
+																											 * a tabela
+																											 * de
+																											 * usuário e
+																											 * acesso
+																											 */
+
+			inverseJoinColumns = @JoinColumn(name = "acesso_id", foreignKey = @ForeignKey(name = "acesso_fk"))
+
+	)
+	private List<Role> acessos = new ArrayList<Role>();
+
+	/* Refere-se ao cadastro da empresa em multitanci */
+	@NotNull(message = "Empresa deve ser informado")
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "role_usuario", uniqueConstraints = @UniqueConstraint(name = "unique_role_user", 
-    columnNames = { "acesso_id","usuario_id" }), //Contraint de unicidade entre usuario e acesso
-    joinColumns = @JoinColumn(name="usuario_id", //Representa a tabela de usuario
-    foreignKey = @ForeignKey(name= "usuario_fk")),
-    inverseJoinColumns = @JoinColumn(name = "acesso_id", //Representa a tabela do Role
-    foreignKey = @ForeignKey(name = "acesso_fk")))
-  
-    private List<Role> acessos = new ArrayList<Role>();
-	// Vai ser criada uma lista de Roles(acessos), lembra que é name =a classe Role
-	// quem possui o GrantedAuthority, por isso, abaixo no método retorna acessos
+	@JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresa_fk"))
+	private Empresa empresa;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return acessos;
+		return this.acessos;
 	}
 
 	@Override
 	public @Nullable String getPassword() {
-		return senha;
+		return this.senha;
 	}
 
 	@Override
 	public String getUsername() {
-		return login;
+		return this.login;
 	}
 
 	public Long getId() {
@@ -121,20 +125,12 @@ public class Usuario implements UserDetails {
 		this.senha = senha;
 	}
 
-	public boolean isBloqueio() {
+	public Boolean getBloqueio() {
 		return bloqueio;
 	}
 
-	public void setBloqueio(boolean bloqueio) {
+	public void setBloqueio(Boolean bloqueio) {
 		this.bloqueio = bloqueio;
-	}
-
-	public String getTokenSessao() {
-		return tokenSessao;
-	}
-
-	public void setTokenSessao(String tokenSessao) {
-		this.tokenSessao = tokenSessao;
 	}
 
 	public String getRefreshToken() {
@@ -145,12 +141,12 @@ public class Usuario implements UserDetails {
 		this.refreshToken = refreshToken;
 	}
 
-	public Empresa getEmpresa() {
-		return empresa;
+	public String getTokenSessao() {
+		return tokenSessao;
 	}
 
-	public void setEmpresa(Empresa empresa) {
-		this.empresa = empresa;
+	public void setTokenSessao(String tokenSessao) {
+		this.tokenSessao = tokenSessao;
 	}
 
 	public ClienteFuncionario getClienteFuncionario() {
@@ -167,6 +163,14 @@ public class Usuario implements UserDetails {
 
 	public void setAcessos(List<Role> acessos) {
 		this.acessos = acessos;
+	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
 	public static long getSerialversionuid() {

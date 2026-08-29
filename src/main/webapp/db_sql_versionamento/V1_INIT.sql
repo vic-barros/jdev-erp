@@ -154,7 +154,7 @@ ALTER TABLE IF EXISTS usuario
 	token_sessao, 
 	cliente_funcionario_id, 
 	empresa_id)
-	VALUES (1, false, 'victoria2425laissa@gmail.com', '', '$2a$10$EdSk5eHRDGvguL5zGztlN.In.U9QwCdWYeGJ9XtLxpJTTmNVzNTVW', '', 1, 1);
+	VALUES (1, false, 'victoria2425laissa@gmail.com', '', '$2a$10$Ar5FDC4kS8U6qsoetREbDeGlWSoYjLAJZXNSPMsTu1XwNSFbPqGl2', '', 1, 1);
 
 	update cliente_funcionario SET usuario_id = 1 where id =1;
 	
