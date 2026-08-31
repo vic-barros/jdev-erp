@@ -16,7 +16,7 @@ public class MsgApiException extends RuntimeException {
 
 	public MsgApiException(String message) {
 		super(message);
-		this.status = HttpStatus.OK;
+		this.status = HttpStatus.BAD_REQUEST;
 
 	}
 
