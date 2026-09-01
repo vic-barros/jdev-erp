@@ -1,18 +1,26 @@
-package br.com.jdeverp.pro.exception;
+package br.com.jdeverp.pro.util;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+/**
+ * Classe utilitária para manipulação de objetos JSON
+ * 
+ * @author jdeverp
+ *
+ */
 @Component
 public class ObjectMapperUtil extends ObjectMapper {
 
@@ -30,12 +38,12 @@ public class ObjectMapperUtil extends ObjectMapper {
 	}
 
 	public String objetoParaJson(Object objeto) throws JsonProcessingException {
-		return this.writeValueAsString(objeto);
+		return writeValueAsString(objeto);
 	}
 
 	public Object lerJsonParaObjeto(String json, Class<?> classeCanonicalName) throws Exception {
 		JavaType type = getTypeFactory().constructFromCanonical(classeCanonicalName.getCanonicalName());
-		return this.readValue(json, type);
+		return readValue(json, type);
 	}
 
 	public LinkedHashMap<String, Object> jsonParaHashMap(String json) throws Exception {
@@ -43,7 +51,7 @@ public class ObjectMapperUtil extends ObjectMapper {
 		return parser;
 	}
 
-	public String jsonHashMapAtributos(String json, String atributo) throws Exception {
+	public String jsonHashMapAtributo(String json, String atributo) throws Exception {
 		parser = new JSONParser(json).parseObject();
 		return valorAtributo(atributo);
 	}
@@ -51,6 +59,11 @@ public class ObjectMapperUtil extends ObjectMapper {
 	public String valorAtributo(String atributo) throws Exception {
 		Object valor = parser.get(atributo);
 		return valor != null ? valor.toString().trim() : null;
+	}
+
+	public Map<String, Object> jsonForMap(String json) throws Exception {
+		return (Map<String, Object>) readValue(json, new TypeReference<HashMap<String, Object>>() {
+		});
 	}
 
 }
