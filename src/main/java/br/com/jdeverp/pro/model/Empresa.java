@@ -2,6 +2,10 @@ package br.com.jdeverp.pro.model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
@@ -19,6 +23,11 @@ import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
+@JsonIdentityInfo(
+	    generator = ObjectIdGenerators.PropertyGenerator.class,
+	    property = "id"
+)
+@JsonIdentityReference(alwaysAsId = true)
 @Entity
 @Table(name = "empresa", uniqueConstraints = {
 		@UniqueConstraint(name ="unique_pessoa_empresa", columnNames = {"pessoa_id"})
@@ -139,6 +148,18 @@ public class Empresa {
 	public void setVigenciaPlano(LocalDate vigenciaPlano) {
 		this.vigenciaPlano = vigenciaPlano;
 	}
+
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+	
+	
 	
 	
 

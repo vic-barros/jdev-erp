@@ -1,5 +1,6 @@
 package br.com.jdeverp.pro.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import br.com.jdeverp.pro.dto.AlterarSenhaDTO;
 import br.com.jdeverp.pro.dto.LoginDTO;
 import br.com.jdeverp.pro.dto.TokenDTO;
+import br.com.jdeverp.pro.dto.UsuarioDTO;
 import br.com.jdeverp.pro.exception.MsgApiException;
 import br.com.jdeverp.pro.model.ClienteFuncionario;
 import br.com.jdeverp.pro.model.Role;
@@ -226,8 +228,22 @@ public void alterarSenha(AlterarSenhaDTO dto) {
 		return usuarioRepository.existsById(id, empresaId);
 	}
 
-	public List<Usuario> listar(Long empresaId) {
-		return usuarioRepository.listar(empresaId);
+	public List<UsuarioDTO> listar(Long empresaId) {
+		
+		List<UsuarioDTO> dtos = new ArrayList<UsuarioDTO>();
+		List<Usuario> usuarios = usuarioRepository.listar(empresaId);
+		
+		for (Usuario usuario : usuarios) {
+			UsuarioDTO dto = new UsuarioDTO();
+			dto.setId(usuario.getId());
+			dto.setPessoa(usuario.getClienteFuncionario().getPessoa().getNome());
+			dto.setLiberado(usuario.isEnabled());
+			dto.setEmpresa(usuario.getEmpresa().getPessoa().getNome());
+			dto.setTipoClienteFuncionario(usuario.getClienteFuncionario().getTipoClienteFuncionario().name());
+			dtos.add(dto);
+		}
+		
+		return dtos;
 	}
 
 	public Optional<Usuario> buscarPorId(Long id, Long empresaId) {

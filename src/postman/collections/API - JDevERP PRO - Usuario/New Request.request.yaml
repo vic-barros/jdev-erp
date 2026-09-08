@@ -1,0 +1,13 @@
+$kind: http-request
+url: http://localhost:8080/jdev-erp-pro-back-end-dev/api/usuario/login
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"login\": \"victoria2425laissa@gmail.com\",\r
+
+    \    \"senha\": \"V!ct0ri@2026\"\r
+
+    }"
+order: 1788884258744

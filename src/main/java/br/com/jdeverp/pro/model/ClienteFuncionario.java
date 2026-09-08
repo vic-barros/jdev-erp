@@ -1,5 +1,9 @@
 package br.com.jdeverp.pro.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import br.com.jdeverp.pro.enums.TipoClienteFuncionario;
 import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.Column;
@@ -20,6 +24,11 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotNull;
 
+@JsonIdentityInfo(
+	    generator = ObjectIdGenerators.PropertyGenerator.class,
+	    property = "id"
+)
+@JsonIdentityReference(alwaysAsId = true)
 @Entity
 @Table(name = "cliente_funcionario", uniqueConstraints = {
 		@UniqueConstraint(name = "unique_pessoa_usuario", columnNames = { "usuario_id", "pessoa_id" }),

@@ -1,12 +1,15 @@
 package br.com.jdeverp.pro.model;
 
 import java.util.ArrayList;
+
 import java.util.Collection;
 import java.util.List;
 
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
@@ -41,19 +44,24 @@ public class Usuario implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_usuario")
 	private Long id;
 
+	@JsonIgnore
 	@NotBlank(message = "Login deve ser informado")
 	@Column(nullable = false, unique = true)
 	private String login;
 
+	@JsonIgnore
 	@NotBlank(message = "Senha deve ser informado")
 	@Column(nullable = false, unique = true)
 	private String senha;
 
+	@JsonIgnore
 	private Boolean liberado = true;
 
+	@JsonIgnore
 	@Column(columnDefinition = "text")
 	private String refreshToken;
 
+	@JsonIgnore
 	@Column(columnDefinition = "text")
 	private String tokenSessao;
 
@@ -62,8 +70,9 @@ public class Usuario implements UserDetails {
 	@JoinColumn(name = "cliente_funcionario_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "cliente_funcionario_fk"))
 	private ClienteFuncionario clienteFuncionario;
 
-	// Alex -> ROLE_ADMIN, ROLE_GERENTE
-	@ManyToMany(fetch = FetchType.LAZY)
+	
+	@JsonIgnore
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "role_usuario", uniqueConstraints = @UniqueConstraint(name = "unique_role_user", columnNames = {
 			"acesso_id", "usuario_id" }), /* Contraint de unicidade entre usuario e acesso */
 
@@ -82,15 +91,17 @@ public class Usuario implements UserDetails {
 
 	/* Refere-se ao cadastro da empresa em multitanci */
 	@NotNull(message = "Empresa deve ser informado")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresa_fk"))
 	private Empresa empresa;
 
+	@JsonIgnore
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.acessos;
 	}
-
+	
+	@JsonIgnore
 	@Override
 	public @Nullable String getPassword() {
 		return this.senha;
@@ -102,10 +113,29 @@ public class Usuario implements UserDetails {
 	}
 	
 	//Significa se está habilitado ou não, como estamos retornando "false", ele está dizendo que o está habilitado está retornando não
+	@JsonIgnore
 	@Override
 	public boolean isEnabled() {
 		return liberado;
 		
+	}
+	
+	@JsonIgnore
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+	
+	@JsonIgnore
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+	
+	@JsonIgnore
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
 	}
 
 	public Long getId() {
