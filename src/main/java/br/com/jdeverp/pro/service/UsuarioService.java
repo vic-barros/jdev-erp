@@ -57,6 +57,15 @@ public class UsuarioService {
 		if (usuario == null) {
 			throw new MsgApiException("Usuário não encontrado.", HttpStatus.UNAUTHORIZED);
 		}
+		
+		if(!usuario.isEnabled()) {
+			throw new MsgApiException("Usuário bloqueado, entre em contato com o administrador do sistema.", HttpStatus.UNAUTHORIZED);
+			
+		}
+		
+		if(usuario.getEmpresa().isBloqueio()) {
+			throw new MsgApiException("Empresa bloqueada, entre em contato com o administrador do sistema.", HttpStatus.UNAUTHORIZED);
+		}
 		// Explicar porque tem que validar a senha
 		boolean senhaValida = passwordEncoder.matches(dto.getSenha(), usuario.getSenha());
 
@@ -142,6 +151,15 @@ public void alterarSenha(AlterarSenhaDTO dto) {
 	  if (usuario == null) {
 		  throw new MsgApiException("Usuário não encontrado.");
 	  }	
+	  
+	  if(usuario.isEnabled()) {
+			throw new MsgApiException("Usuário bloqueado, entre em contato com o administrador do sistema.", HttpStatus.UNAUTHORIZED);
+			
+		}
+		
+		if(usuario.getEmpresa().isBloqueio()) {
+			throw new MsgApiException("Empresa bloqueada, entre em contato com o administrador do sistema.", HttpStatus.UNAUTHORIZED);
+		}
 	  
 	  if (!dto.getNovaSenha().equals(dto.getConfirmarSenha())) {
 		  throw new MsgApiException("A confirmação da senha não confere.");

@@ -49,7 +49,7 @@ public class Usuario implements UserDetails {
 	@Column(nullable = false, unique = true)
 	private String senha;
 
-	private Boolean bloqueio = false;
+	private Boolean liberado = true;
 
 	@Column(columnDefinition = "text")
 	private String refreshToken;
@@ -100,6 +100,13 @@ public class Usuario implements UserDetails {
 	public String getUsername() {
 		return this.login;
 	}
+	
+	//Significa se está habilitado ou não, como estamos retornando "false", ele está dizendo que o está habilitado está retornando não
+	@Override
+	public boolean isEnabled() {
+		return liberado;
+		
+	}
 
 	public Long getId() {
 		return id;
@@ -125,12 +132,12 @@ public class Usuario implements UserDetails {
 		this.senha = senha;
 	}
 
-	public Boolean getBloqueio() {
-		return bloqueio;
+	public Boolean getLiberado() {
+		return liberado;
 	}
 
-	public void setBloqueio(Boolean bloqueio) {
-		this.bloqueio = bloqueio;
+	public void setLiberado(Boolean liberado) {
+		this.liberado = liberado;
 	}
 
 	public String getRefreshToken() {
