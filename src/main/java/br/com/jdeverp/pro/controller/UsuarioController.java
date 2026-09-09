@@ -2,8 +2,10 @@ package br.com.jdeverp.pro.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,6 +53,12 @@ public class UsuarioController {
 	@GetMapping("/buscarPorId/{id}")
 	public ResponseEntity<UsuarioDTO> buscarPorId(@PathVariable(required = true, value = "id") Long idUser){
 		return ResponseEntity.ok(usuarioService.buscarPorIdDto(idUser, usuarioLogadoService.getEmpresaIdLogada()));
+	}
+	
+	@DeleteMapping("/deletar/{id}")
+	public ResponseEntity<String> deletePorId(@PathVariable(required = true, value = "id") Long idUser){
+		usuarioService.deleteById(idUser, usuarioLogadoService.getEmpresaIdLogada());
+		return ResponseEntity.ok("Usuário deletado com sucesso!");
 	}
 
 }

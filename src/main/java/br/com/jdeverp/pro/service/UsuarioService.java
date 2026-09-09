@@ -208,7 +208,9 @@ public void alterarSenha(AlterarSenhaDTO dto) {
 		return usuarioRepository.existePorNomeDiferenteId(id, nome, idEmpresa);
 	}
 
+	//Antes de deletar o usuário precisa deletar o cliente_funcionario por cascata, se não vai dar erro no end-point deletar a controller
 	public void deleteById(Long id, Long idEmpresa) {
+		clienteFuncionarioService.removeUserClienteFuncionarioId(id, idEmpresa);
 		usuarioRepository.deleteById(id, idEmpresa);
 	}
 
