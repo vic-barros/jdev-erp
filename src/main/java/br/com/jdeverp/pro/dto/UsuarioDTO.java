@@ -1,8 +1,5 @@
 package br.com.jdeverp.pro.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
 /*DTO (ou Record) - Data Transfer Object = Objeto de transferencia de dados*/
 public class UsuarioDTO {
 

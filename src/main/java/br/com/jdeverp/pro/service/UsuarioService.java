@@ -249,6 +249,25 @@ public void alterarSenha(AlterarSenhaDTO dto) {
 	public Optional<Usuario> buscarPorId(Long id, Long empresaId) {
 		return usuarioRepository.buscarPorId(id, empresaId);
 	}
+	
+	//Variação para usar no controller retornando o DTO
+	public UsuarioDTO buscarPorIdDto(Long id, Long empresaId) {
+		
+		Optional <Usuario> usuario = usuarioRepository.buscarPorId(id, empresaId);
+		
+		if(!usuario.isPresent()) {
+			throw new MsgApiException("Usuário não encontrado para a empresa logada.");
+		}
+		
+		UsuarioDTO dto = new UsuarioDTO();
+		dto.setId(usuario.get().getId());
+		dto.setPessoa(usuario.get().getClienteFuncionario().getPessoa().getNome());
+		dto.setLiberado(usuario.get().isEnabled());
+		dto.setEmpresa(usuario.get().getEmpresa().getPessoa().getNome());
+		dto.setTipoClienteFuncionario(usuario.get().getClienteFuncionario().getTipoClienteFuncionario().name());
+		
+		return dto;
+	}
 
 	public long total(Long empresaId) {
 		return usuarioRepository.total(empresaId);

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +46,11 @@ public class UsuarioController {
 	public ResponseEntity<List<UsuarioDTO>> listarUsuarios(){
 		return ResponseEntity.ok(usuarioService.listar(usuarioLogadoService.getEmpresaIdLogada()));
 		
+	}
+	
+	@GetMapping("/buscarPorId/{id}")
+	public ResponseEntity<UsuarioDTO> buscarPorId(@PathVariable(required = true, value = "id") Long idUser){
+		return ResponseEntity.ok(usuarioService.buscarPorIdDto(idUser, usuarioLogadoService.getEmpresaIdLogada()));
 	}
 
 }
