@@ -16,11 +16,11 @@ public class UsuarioDTO {
 	@NotBlank(message = "Login é obrigatório")
 	private String login;
 	
-	@NotBlank(message = "Senha é obrigatória")
 	private String senha;
 	
 	private Long clienteFuncionarioId;
 	
+	@NotNull(message = "Pessoa deve ser informada para cadastrar o usuário de acesso ao sistema.")
 	private Long pessoaId;
 	
 

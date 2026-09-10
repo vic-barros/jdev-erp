@@ -144,7 +144,7 @@ public class UsuarioService {
 		clienteFuncionario.setUsuario(usuario);
 		clienteFuncionarioService.salvar(clienteFuncionario);
 
-		usuarioDto.setSenha("Ocultada"); //Não pode expor a senha na rede
+		usuarioDto.setSenha("***Ocultada***"); //Não pode expor a senha na rede
 		usuarioDto.setClienteFuncionarioId(clienteFuncionario.getId());
 		usuarioDto.setEmpresa(clienteFuncionario.getEmpresa().getPessoa().getNome());
 		usuarioDto.setTipoClienteFuncionario(clienteFuncionario.getTipoClienteFuncionario().name());
@@ -153,35 +153,42 @@ public class UsuarioService {
 
 	}
 
-	public Usuario atualizar(Usuario usuario) {
-
+public UsuarioDTO atualizar(UsuarioDTO usuarioDto) {
+		
 		if (!usuarioLogadoService.isAdmin()) {
-			throw new MsgApiException("Apenas usuários com perfil de administrador podem cadastrar novos usuários.");
+			throw new MsgApiException("Apenas administradores podem cadastrar novos usuários.");
 		}
-
-		if (usuarioRepository.existeOutroUsuarioComPessoa(usuario.getClienteFuncionario().getPessoa().getId(),
-				usuario.getId(), usuarioLogadoService.getEmpresaIdLogada())) {
-			throw new MsgApiException("Existe outro usuário associado a pessoa que foi selecionada nesta empresa.");
+		
+		
+		if (usuarioRepository.existeOutroUsuarioComPessoa(usuarioDto.getPessoaId(), usuarioDto.getId(), usuarioLogadoService.getEmpresaIdLogada())) {
+			throw new MsgApiException("Existe outro usuário associado a pessoa que foi selecionada.");
 		}
-
-		Usuario usuarioBanco = buscarPorId(usuario.getId(), usuarioLogadoService.getEmpresaIdLogada()).get();
-
-		if (usuario.getAcessos() == null || usuario.getAcessos().isEmpty()) {
-			usuario.setAcessos(usuarioBanco.getAcessos());
+		
+		
+		ClienteFuncionario clienteFuncionario =  clienteFuncionarioService.findByPessoa(usuarioDto.getPessoaId(), usuarioLogadoService.getEmpresaIdLogada());
+		
+		if (clienteFuncionario == null) {
+			throw new MsgApiException("Não foi informado o registro de pessoa/ cliente ou funcioário para o usuário.");
 		}
-
-		ClienteFuncionario clienteFuncionario = clienteFuncionarioService.findByPessoa(
-				usuario.getClienteFuncionario().getPessoa().getId(), usuarioLogadoService.getEmpresaIdLogada());
-
-		usuario.setSenha(usuarioBanco.getSenha()); // Mantém a senha do banco porque terá um método específico para
-													// alterar a senha do usuário (criptografia)
-		usuario.setClienteFuncionario(clienteFuncionario);
-		usuario.setEmpresa(usuarioLogadoService.getEmpresaLogada());
-
-		return usuarioRepository.save(usuario);
-
+		
+		Usuario usuarioBanco = buscarPorId(usuarioDto.getId(), usuarioLogadoService.getEmpresaIdLogada()).get();
+		
+		usuarioBanco.setClienteFuncionario(clienteFuncionario);
+		usuarioBanco.setEmpresa(usuarioLogadoService.getEmpresaLogada());
+		usuarioBanco.setLogin(usuarioDto.getLogin());
+		usuarioBanco.setLiberado(usuarioDto.getLiberado());
+		
+		usuarioBanco = usuarioRepository.saveAndFlush(usuarioBanco);
+		
+		usuarioDto.setSenha("***Ocultada***");/*Não pode expor a senha na rede*/
+		usuarioDto.setId(usuarioBanco.getId());
+		usuarioDto.setClienteFuncionarioId(clienteFuncionario.getId());
+		usuarioDto.setEmpresa(clienteFuncionario.getEmpresa().getPessoa().getNome());
+		usuarioDto.setPessoa(clienteFuncionario.getPessoa().getNome());
+		usuarioDto.setTipoClienteFuncionario(clienteFuncionario.getTipoClienteFuncionario().name());
+		
+		return usuarioDto;
 	}
-
 	public void alterarSenha(AlterarSenhaDTO dto) {
 
 		Usuario usuario = usuarioRepository.buscarPorId(dto.getId(), usuarioLogadoService.getEmpresaIdLogada()).get();
