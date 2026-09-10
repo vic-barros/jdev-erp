@@ -1,5 +1,8 @@
 package br.com.jdeverp.pro.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 /*DTO (ou Record) - Data Transfer Object = Objeto de transferencia de dados*/
 public class UsuarioDTO {
 
@@ -8,6 +11,17 @@ public class UsuarioDTO {
 	private Boolean liberado = true;
 	private String empresa;
 	private String tipoClienteFuncionario;
+	
+	//Adicinou ao DTO por conta do método salvar, que precisa dos atributos abaixos porque são obrigatórios, possuem anotação not null
+	@NotBlank(message = "Login é obrigatório")
+	private String login;
+	
+	@NotBlank(message = "Senha é obrigatória")
+	private String senha;
+	
+	private Long clienteFuncionarioId;
+	
+	private Long pessoaId;
 	
 
 	public Long getId() {
@@ -49,6 +63,40 @@ public class UsuarioDTO {
 	public void setTipoClienteFuncionario(String tipoClienteFuncionario) {
 		this.tipoClienteFuncionario = tipoClienteFuncionario;
 	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public Long getClienteFuncionarioId() {
+		return clienteFuncionarioId;
+	}
+
+	public void setClienteFuncionarioId(Long clienteFuncionarioId) {
+		this.clienteFuncionarioId = clienteFuncionarioId;
+	}
+
+	public Long getPessoaId() {
+		return pessoaId;
+	}
+
+	public void setPessoaId(Long pessoaId) {
+		this.pessoaId = pessoaId;
+	}
+	
+	
 
 	
 	

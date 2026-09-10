@@ -120,6 +120,14 @@ public class Usuario implements UserDetails {
 		
 	}
 	
+	public boolean isAdmin() {
+		if(this.acessos == null || this.acessos.isEmpty()) {
+			return false;
+		}
+		
+		return this.acessos.stream().anyMatch(a -> a.getAcesso().equals("ROLE_ADMIN"));
+	}
+	
 	@JsonIgnore
 	@Override
 	public boolean isAccountNonExpired() {

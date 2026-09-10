@@ -171,6 +171,7 @@ ALTER TABLE IF EXISTS usuario
 	select nextval('seq_role_usuario');
 	
 	
+	
 ALTER TABLE IF EXISTS public.usuario
     ALTER COLUMN refresh_token TYPE TEXT,
     ALTER COLUMN token_sessao TYPE TEXT;	

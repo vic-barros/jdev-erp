@@ -18,6 +18,10 @@ public class RoleUsuarioService {
 
 	@PersistenceContext
 	private EntityManager entityManager;
+	
+	public RoleUsuario salvar(RoleUsuario roleUsuario) {
+		return roleUsuarioRepository.save(roleUsuario);
+	}
 
 	// ====================Métodos específicos para Usuário====================
 

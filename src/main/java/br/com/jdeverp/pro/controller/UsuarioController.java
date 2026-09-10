@@ -30,6 +30,16 @@ public class UsuarioController {
 	
 	@Autowired
 	private UsuarioLogadoService usuarioLogadoService;
+	
+	//Enviar dados para salvar no banco (POST)
+	//Precisa deixar um usuário como ROLE_ADMIN para poder salvar outro usuário (INSERT no banco em Role_Usuario)
+	@PostMapping("/salvar")
+	public ResponseEntity<UsuarioDTO> salvar(@RequestBody @Valid UsuarioDTO usuarioDto) {
+		
+		UsuarioDTO usuarioSalvo = usuarioService.salvar(usuarioDto);
+		
+		return ResponseEntity.ok(usuarioSalvo);
+	}
 
 	/* Ponto de acesso (end-point): /api/usuario/login */
 	// Como vamos enviar dados utilizaremos um post
